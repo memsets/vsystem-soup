@@ -30,6 +30,9 @@ class Engine():
         while State.RUNNING:
             self.process_events()
             self.process_input()
+ 
+            self.scene.fill((255, 50, 100))
+ 
             self.process_entities()
             
             pygame.display.flip()
@@ -63,18 +66,15 @@ class Engine():
             print("Mouse clicked...")
             
     def process_entities(self):
-        # TODO: I must fix, refactor this method.
-        self.scene.fill((255, 50, 100))
+        # TODO: I must fix, refactor this method.               
+        mouse_x, mouse_y = pygame.mouse.get_pos()
         
         debug_position = self.my_font.render(f"distance: debug", False, (255, 255, 58))
-        mouse_x, mouse_y = pygame.mouse.get_pos()
         caret_position = self.caret_font.render(f"pos: {mouse_x} {mouse_y}", mouse_x, mouse_y)
-
-        self.scene.blit(caret_position, (mouse_x + 30, mouse_y + 30))
+        self.scene.blit(caret_position, (pygame.mouse.get_pos() + 30)
         self.scene.blit(debug_position, (100, 100))
 
         pygame.draw.circle(self.scene, (0, 0, 0), (200, 200), 50)
-        
         
     def add_entity(self, hash_name, value):
         self.entities[hash_name] = value
