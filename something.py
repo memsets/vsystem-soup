@@ -3,14 +3,12 @@
 import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
-import sys
 from enum import Enum
 
 class State(Enum):
     RUNNING = True,
     KILLED = False
     
-
 class Engine():    
     def __init__(self):
         self.window_sz = (1200, 800)
@@ -49,7 +47,7 @@ class Engine():
         self.my_font = pygame.font.SysFont("Arial", 18)
         self.caret_font = pygame.font.SysFont("Arial", 18)
     
-    def process_events():
+    def process_events(self):
         for i in pygame.event.get():
             if i.type == pygame.QUIT:
                 State.RUNNING = False
@@ -66,14 +64,13 @@ class Engine():
             print("Mouse clicked...")
             
     def process_entities(self):
-        # TODO: I must fix, refactor this method.               
         mouse_x, mouse_y = pygame.mouse.get_pos()
         
         debug_position = self.my_font.render(f"distance: debug", False, (255, 255, 58))
         caret_position = self.caret_font.render(f"pos: {mouse_x} {mouse_y}", mouse_x, mouse_y)
-        self.scene.blit(caret_position, (pygame.mouse.get_pos() + 30)
+        
+        self.scene.blit(caret_position, (mouse_x + 30, mouse_y + 30))
         self.scene.blit(debug_position, (100, 100))
-
         pygame.draw.circle(self.scene, (0, 0, 0), (200, 200), 50)
         
     def add_entity(self, hash_name, value):
@@ -84,62 +81,17 @@ class Engine():
 
 
 class App:
-    IS_RUNNING = True
-
     def __init__(self):
-        pygame.init()
-        pygame.display.set_caption("Something modelling system 0.001v.")
+        pass
+    
+    def start(self):
+        eng = Engine()
+        eng.mainloop()    
 
-        self.scene = pygame.display.set_mode((1200, 800))
-
-        pygame.font.init()
-        self.my_font = pygame.font.SysFont("Arial", 18)
-        self.caret_font = pygame.font.SysFont("Arial", 18)
-        self.basic_loop()
-
-    def basic_loop(self):
-        while App.IS_RUNNING:
-            self.basic_event_loop()
-            self.input_handler()
-
-            self.scene.fill((255, 50, 100))
-            
-            debug_position = self.my_font.render(f"distance: debug", False, (255, 255, 58))
-            mouse_x, mouse_y = pygame.mouse.get_pos()
-            caret_position = self.caret_font.render(f"pos: {mouse_x} {mouse_y}", mouse_x, mouse_y)
-            
-            self.scene.blit(caret_position, (mouse_x + 30, mouse_y + 30))
-            self.scene.blit(debug_position, (100, 100))
-            
-            
-            # Draw logic
-            
-            # Draw shapes 
-            pygame.draw.circle(self.scene, (0, 0, 0), (200, 200), 50)
-
-            pygame.display.flip()
-            pygame.display.update()
-            
-    def basic_event_loop(self):
-        for i in pygame.event.get():
-            if i.type == pygame.QUIT:
-                App.IS_RUNNING = False
-
-    def input_handler(self):
-        keys = pygame.key.get_pressed()
-        if (keys[pygame.K_ESCAPE]
-                or keys[pygame.K_RETURN]
-                or keys[pygame.K_KP_PERIOD]
-                or keys[pygame.K_END]):
-            App.IS_RUNNING = False
-        pressed = pygame.mouse.get_pressed()
-        if pressed[0]:
-            print("Mouse clicked...")
 
 def main():
-    print(sys.platform)
-    hello = App()
-    pygame.quit()
+    application = App()
+    application.start()
     
 if __name__ == '__main__':
     main()
