@@ -8,8 +8,9 @@ from enum import Enum
 class State(Enum):
     RUNNING = True,
     KILLED = False
-    
-class Engine():    
+
+
+class Engine:
     def __init__(self):
         self.window_sz = (1200, 800)
         self.title = "Something modelling system 0.001v."
@@ -18,12 +19,12 @@ class Engine():
         self.scene = None
 
         self.my_font = None
-        self.caret_font = None            
-            
+        self.caret_font = None
+
     def mainloop(self):
         self.load_thirdparty()
         self.load_fonts()
-        
+
         # loop
         while State.RUNNING:
             self.process_events()
@@ -44,8 +45,8 @@ class Engine():
         
     def load_fonts(self):
         pygame.font.init()
-        self.my_font = pygame.font.SysFont("Arial", 18)
-        self.caret_font = pygame.font.SysFont("Arial", 18)
+        self.my_font = pygame.font.SysFont("Arial", 24)
+        self.caret_font = pygame.font.SysFont("Arial", 24)
     
     def process_events(self):
         for i in pygame.event.get():
@@ -72,7 +73,8 @@ class Engine():
         self.scene.blit(caret_position, (mouse_x + 30, mouse_y + 30))
         self.scene.blit(debug_position, (100, 100))
         pygame.draw.circle(self.scene, (0, 0, 0), (200, 200), 50)
-        
+
+
     def add_entity(self, hash_name, value):
         self.entities[hash_name] = value
     
@@ -82,8 +84,8 @@ class Engine():
 
 class App:
     def __init__(self):
-        pass
-    
+        print("Starting application...")
+
     def start(self):
         eng = Engine()
         eng.mainloop()    
