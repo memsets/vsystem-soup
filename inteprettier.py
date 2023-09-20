@@ -1,28 +1,34 @@
 #!/usr/bin/env python3
 
-import os
-import sys
+import os, sys
 from enum import Enum
+
 
 class Token:
     PLUS = 0,
-    NUM  = 1
+    NUMBER  = 1
 
-    def __init__(self):
-        self.type = None
-        self.src  = None
-
+    def __init__(self, token_type, src):
+        self.token_type = token_type
+        self.src = src
 
 
 class Lexer:
-    pass
+    """
+    Making lexems for my Parser.
+    """
+
+    def __init__(self):
+        pass
+
+    # TODO: Create util methods for manipulation of given string.
 
 
-# ================== Main ==================
+
 
 def main():
     source = "5 + 5"
-    print("Hello lang")
+    print(source)
 
 
 if __name__ == '__main__':
