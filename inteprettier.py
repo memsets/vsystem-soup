@@ -23,6 +23,14 @@ class Lexer:
 
     # TODO: Create util methods for manipulation of given string.
 
+    def peek(self, relativePosition):
+        pass
+    
+    def next(self, amount):
+        pass
+    
+    def step(self):
+        pass
 
 
 

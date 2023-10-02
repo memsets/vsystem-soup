@@ -3,6 +3,10 @@
 import os
 import sys
 
+# I dont know, why this shit is not working! (centered window )
+# os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (1000, 1000)
+# os.environ['SDL_VIDEO_CENTERED'] = '0'
+
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 
@@ -13,13 +17,15 @@ from enum import Enum
 class Entity(pygame.sprite.Sprite):
 
     def __init__(self):
-        # assert(True, "Not implemented...")
-
         super().__init__()
-        self.test_figure = pygame.Surface((10, 10))
-        self.test_figure.fill((0, 0, 0))
+        self.surface = pygame.Surface((10, 10))
+        self.surface.fill((0, 0, 0))
 
+    def get_rect(self):
+        return self.surface.get_rect()
 
+    def get_surface(self):
+        return self.surface
 
 
 class State(Enum):
@@ -99,7 +105,10 @@ class Engine:
         
         self.scene.blit(caret_position, (mouse_x + 30, mouse_y + 30))
         self.scene.blit(debug_position, (100, 100))
-        pygame.draw.circle(self.scene, (0, 0, 0), (200, 200), 50)           # This is some Entity.
+
+        self.scene.blit(Entity().get_surface(), (500, 500))                 # <<<--- Good practice
+
+        pygame.draw.circle(self.scene, (0, 0, 0), (200, 200), 50)           # <<<--- Bad practice This is some Entity.
 
 
     def add_entity(self, hash_name, value):
@@ -118,6 +127,7 @@ class Application:
         eng.mainloop()    
 
 
+# May be system info
 def main():
     application = Application()
     application.start()
